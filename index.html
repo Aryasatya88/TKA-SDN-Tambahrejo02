@@ -70,14 +70,14 @@
             </div>
 
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <h2 class="text-lg font-bold text-indigo-700 mb-4">Login Peserta Ujian</h2>
-                <form id="form-login" onsubmit="mulaiUjian(event)" class="space-y-4">
+                <h2 class="text-lg font-bold text-indigo-700 mb-4">Login Peserta tes</h2>
+                <form id="form-login" onsubmit="mulaites(event)" class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium mb-1">Nama Lengkap</label>
                         <input type="text" id="input-nama" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-1">NISN / Nomor Ujian</label>
+                        <label class="block text-sm font-medium mb-1">NISN / Nomor tes</label>
                         <input type="text" id="input-nisn" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
                     </div>
                     <div>
@@ -87,11 +87,11 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-1">Token Ujian</label>
+                        <label class="block text-sm font-medium mb-1">Token tes</label>
                         <input type="text" id="input-token" required placeholder="Masukkan token dari admin" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none uppercase font-bold tracking-wider">
                     </div>
                     <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 rounded-lg transition">
-                        Mulai Ujian
+                        Mulai tes
                     </button>
                 </form>
             </div>
@@ -101,8 +101,8 @@
             </div>
         </div>
 
-        <!-- HALAMAN 2: RUANG UJIAN -->
-        <div id="view-ujian" class="hidden space-y-4">
+        <!-- HALAMAN 2: RUANG tes -->
+        <div id="view-tes" class="hidden space-y-4">
             <div class="bg-white p-4 rounded-xl shadow-sm border flex justify-between items-center">
                 <div>
                     <p class="text-xs text-slate-500">Peserta: <span id="lbl-nama" class="font-bold text-slate-700"></span></p>
@@ -138,7 +138,7 @@
                         <div class="flex items-center space-x-2"><span class="w-3 h-3 bg-slate-200 rounded-sm inline-block"></span><span>Belum Dijawab</span></div>
                     </div>
                     <button type="button" onclick="konfirmasiSelesai()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded-lg text-sm font-medium transition mt-4">
-                        Selesai Ujian
+                        Selesai tes
                     </button>
                 </div>
             </div>
@@ -147,7 +147,7 @@
         <!-- HALAMAN 3: HASIL & EVALUASI -->
         <div id="view-hasil" class="hidden space-y-4">
             <div class="bg-white p-6 rounded-2xl shadow-sm border text-center space-y-3 watermark-bg">
-                <h2 class="text-xl font-bold text-slate-800">Evaluasi Hasil Ujian</h2>
+                <h2 class="text-xl font-bold text-slate-800">Evaluasi Hasil tes</h2>
                 <div id="eval-pesan-skor" class="p-3 rounded-xl font-bold text-sm"></div>
                 
                 <!-- Keterangan Arti Warna -->
@@ -155,7 +155,7 @@
                     <p class="font-bold text-slate-700 mb-1">Keterangan Arti Warna pada Evaluasi:</p>
                     <div class="flex items-start space-x-2">
                         <span class="w-3 h-3 bg-blue-600 rounded-full mt-0.5 shrink-0"></span>
-                        <p><strong class="text-blue-700">BIRU:</strong> Menandakan pilihan atau jawaban yang dipilih oleh peserta ujian (sesuai kunci jawaban).</p>
+                        <p><strong class="text-blue-700">BIRU:</strong> Menandakan pilihan atau jawaban yang dipilih oleh peserta tes (sesuai kunci jawaban).</p>
                     </div>
                     <div class="flex items-start space-x-2">
                         <span class="w-3 h-3 bg-rose-600 rounded-full mt-0.5 shrink-0"></span>
@@ -221,7 +221,7 @@
                 <div id="admin-content-impor" class="space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="space-y-1">
-                            <label class="block text-xs font-medium text-slate-600">Token Ujian Aktif</label>
+                            <label class="block text-xs font-medium text-slate-600">Token tes Aktif</label>
                             <input type="text" id="admin-token" placeholder="Cth: TKA2026" class="w-full px-3 py-2 border rounded-lg text-sm uppercase font-bold outline-none focus:ring-2 focus:ring-indigo-500">
                         </div>
                     </div>
@@ -298,7 +298,7 @@
 
         let dbPaket = JSON.parse(localStorage.getItem('cbt_paket_soal')) || [];
         let paketDurasi = JSON.parse(localStorage.getItem('cbt_paket_durasi')) || {};
-        let sesiUjian = { nama: '', nisn: '', paketId: '', paketTitle: '', soal: [], rawSoalAsli: [], jawaban: {}, ragu: {}, currentIndex: 0, skor: 0, durasiMenit: 60 };
+        let sesites = { nama: '', nisn: '', paketId: '', paketTitle: '', soal: [], rawSoalAsli: [], jawaban: {}, ragu: {}, currentIndex: 0, skor: 0, durasiMenit: 60 };
         let globalRekapCache = [];
         let timerInterval = null;
         let sisaDetik = 3600;
@@ -562,8 +562,8 @@
 
         function downloadSoalTanpaKunci() {
             let dummyPaket = {
-                title: sesiUjian.paketTitle,
-                questions: JSON.parse(JSON.stringify(sesiUjian.rawSoalAsli))
+                title: sesites.paketTitle,
+                questions: JSON.parse(JSON.stringify(sesites.rawSoalAsli))
             };
             generatePrintView(dummyPaket, false);
         }
@@ -732,7 +732,7 @@
             }
         }
 
-        function mulaiUjian(e) {
+        function mulaites(e) {
             e.preventDefault();
             const nama = document.getElementById('input-nama').value;
             const nisn = document.getElementById('input-nisn').value;
@@ -741,7 +741,7 @@
             const savedToken = localStorage.getItem('cbt_token') || 'TKA2026';
 
             if (tokenInput !== savedToken) {
-                alert("Token ujian salah! Silakan minta token yang benar kepada Administrator.");
+                alert("Token tes salah! Silakan minta token yang benar kepada Administrator.");
                 return;
             }
 
@@ -755,7 +755,7 @@
             let parsedQuestions = parsePaketSoalForPrint(paketDipilih.questions);
             let durasiMenit = paketDurasi[paketId] || 60;
 
-            sesiUjian = {
+            sesites = {
                 nama: nama,
                 nisn: nisn,
                 paketId: paketId,
@@ -772,7 +772,7 @@
             document.getElementById('lbl-paket').textContent = paketDipilih.title;
 
             document.getElementById('view-login').classList.add('hidden');
-            document.getElementById('view-ujian').classList.remove('hidden');
+            document.getElementById('view-tes').classList.remove('hidden');
 
             sisaDetik = durasiMenit * 60;
             mulaiTimer();
@@ -785,7 +785,7 @@
             timerInterval = setInterval(() => {
                 if (sisaDetik <= 0) {
                     clearInterval(timerInterval);
-                    alert("Waktu ujian telah habis!");
+                    alert("Waktu tes telah habis!");
                     hitungDanKirimHasil(true);
                     return;
                 }
@@ -797,8 +797,8 @@
         }
 
         function renderSoal() {
-            const s = sesiUjian.soal[sesiUjian.currentIndex];
-            document.getElementById('lbl-nomor-soal').textContent = `Soal No. ${sesiUjian.currentIndex + 1} dari ${sesiUjian.soal.length}`;
+            const s = sesites.soal[sesites.currentIndex];
+            document.getElementById('lbl-nomor-soal').textContent = `Soal No. ${sesites.currentIndex + 1} dari ${sesites.soal.length}`;
             document.getElementById('lbl-bobot').textContent = `Skor Maks: 3`;
 
             let html = `<p class="font-medium text-slate-800 text-base mb-4 leading-relaxed">${s.question}</p>`;
@@ -806,7 +806,7 @@
             if (s.type === 'mc') {
                 html += '<p class="text-xs text-indigo-600 mb-3 font-semibold">* Pilih 1 jawaban yang benar</p><div class="space-y-3">';
                 const hurufOpsi = ['A', 'B', 'C', 'D', 'E'];
-                let currentAns = sesiUjian.jawaban[sesiUjian.currentIndex] || '';
+                let currentAns = sesites.jawaban[sesites.currentIndex] || '';
                 s.options.forEach((opt, idx) => {
                     let kodeOpsi = hurufOpsi[idx] || (idx + 1);
                     let checked = currentAns === kodeOpsi ? 'checked' : '';
@@ -824,7 +824,7 @@
             } else if (s.type === 'checkbox') {
                 html += '<p class="text-xs text-indigo-600 mb-3 font-semibold">* Pilih minimal 2 jawaban yang benar</p><div class="space-y-3">';
                 const hurufOpsi = ['A', 'B', 'C', 'D', 'E'];
-                let savedAns = sesiUjian.jawaban[sesiUjian.currentIndex] ? sesiUjian.jawaban[sesiUjian.currentIndex].split(',') : [];
+                let savedAns = sesites.jawaban[sesites.currentIndex] ? sesites.jawaban[sesites.currentIndex].split(',') : [];
                 s.options.forEach((opt, idx) => {
                     let kodeOpsi = hurufOpsi[idx] || (idx + 1);
                     let checked = savedAns.includes(kodeOpsi) ? 'checked' : '';
@@ -845,7 +845,7 @@
                 cols.forEach(c => { html += `<th class="p-3 border text-center font-semibold">${c}</th>`; });
                 html += '</tr></thead><tbody>';
                 
-                let savedGrid = sesiUjian.jawaban[sesiUjian.currentIndex] ? sesiUjian.jawaban[sesiUjian.currentIndex].split(',') : [];
+                let savedGrid = sesites.jawaban[sesites.currentIndex] ? sesites.jawaban[sesites.currentIndex].split(',') : [];
                 let rows = s.rows.length > 0 ? s.rows : [s.question];
                 rows.forEach((rowText, rIdx) => {
                     html += `<tr class="border-b hover:bg-slate-50"><td class="p-3 border text-slate-700 font-medium">${rowText}</td>`;
@@ -859,11 +859,11 @@
             }
 
             document.getElementById('container-soal').innerHTML = html;
-            document.getElementById('btn-prev').style.display = sesiUjian.currentIndex === 0 ? 'none' : 'block';
-            document.getElementById('btn-next').textContent = sesiUjian.currentIndex === sesiUjian.soal.length - 1 ? 'Selesai Ujian' : 'Selanjutnya';
+            document.getElementById('btn-prev').style.display = sesites.currentIndex === 0 ? 'none' : 'block';
+            document.getElementById('btn-next').textContent = sesites.currentIndex === sesites.soal.length - 1 ? 'Selesai tes' : 'Selanjutnya';
             
             const btnRagu = document.getElementById('btn-ragu');
-            if (sesiUjian.ragu[sesiUjian.currentIndex]) {
+            if (sesites.ragu[sesites.currentIndex]) {
                 btnRagu.className = "bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition";
                 btnRagu.textContent = "Batal Ragu";
             } else {
@@ -875,7 +875,7 @@
         }
 
         function simpanJawaban(val) {
-            sesiUjian.jawaban[sesiUjian.currentIndex] = val;
+            sesites.jawaban[sesites.currentIndex] = val;
             renderPalette();
         }
 
@@ -883,16 +883,16 @@
             let checkedBoxes = document.querySelectorAll('.cb-opsi:checked');
             if (checkedBoxes.length > 0) {
                 let vals = Array.from(checkedBoxes).map(cb => cb.value).join(',');
-                sesiUjian.jawaban[sesiUjian.currentIndex] = vals;
+                sesites.jawaban[sesites.currentIndex] = vals;
             } else {
-                delete sesiUjian.jawaban[sesiUjian.currentIndex];
+                delete sesites.jawaban[sesites.currentIndex];
             }
             renderPalette();
         }
 
         function simpanGrid() {
             let gridAns = [];
-            let s = sesiUjian.soal[sesiUjian.currentIndex];
+            let s = sesites.soal[sesites.currentIndex];
             let rows = s.rows.length > 0 ? s.rows : [s.question];
             let adaTerisi = false;
             rows.forEach((_, rIdx) => {
@@ -905,16 +905,16 @@
                 }
             });
             if (adaTerisi) {
-                sesiUjian.jawaban[sesiUjian.currentIndex] = gridAns.join(',');
+                sesites.jawaban[sesites.currentIndex] = gridAns.join(',');
             } else {
-                delete sesiUjian.jawaban[sesiUjian.currentIndex];
+                delete sesites.jawaban[sesites.currentIndex];
             }
             renderPalette();
         }
 
         function tandaiRagu() {
-            let idx = sesiUjian.currentIndex;
-            sesiUjian.ragu[idx] = !sesiUjian.ragu[idx];
+            let idx = sesites.currentIndex;
+            sesites.ragu[idx] = !sesites.ragu[idx];
             renderSoal();
         }
 
@@ -922,21 +922,21 @@
             const container = document.getElementById('palette-grid');
             if (!container) return;
             container.innerHTML = '';
-            sesiUjian.soal.forEach((s, idx) => {
+            sesites.soal.forEach((s, idx) => {
                 let btn = document.createElement('button');
                 btn.type = 'button';
-                let isRagu = sesiUjian.ragu[idx];
+                let isRagu = sesites.ragu[idx];
                 let hasAnswer = cekSudahDijawab(idx);
 
                 let bgClass = "bg-slate-200 text-slate-700 hover:bg-slate-300";
                 if (hasAnswer) bgClass = "bg-blue-600 text-white hover:bg-blue-700";
                 if (isRagu) bgClass = "bg-amber-400 text-slate-900 hover:bg-amber-500";
-                if (idx === sesiUjian.currentIndex) bgClass += " ring-2 ring-offset-2 ring-indigo-600 font-bold";
+                if (idx === sesites.currentIndex) bgClass += " ring-2 ring-offset-2 ring-indigo-600 font-bold";
 
                 btn.className = `p-2 rounded-lg text-xs font-semibold transition ${bgClass}`;
                 btn.textContent = idx + 1;
                 btn.onclick = () => {
-                    sesiUjian.currentIndex = idx;
+                    sesites.currentIndex = idx;
                     renderSoal();
                 };
                 container.appendChild(btn);
@@ -944,8 +944,8 @@
         }
 
         function cekSudahDijawab(idx) {
-            let s = sesiUjian.soal[idx];
-            let ans = sesiUjian.jawaban[idx];
+            let s = sesites.soal[idx];
+            let ans = sesites.jawaban[idx];
             if (ans === undefined || ans === null || ans === "") return false;
             if (s.type === 'mc') return String(ans).trim().length > 0;
             if (s.type === 'checkbox') return String(ans).split(',').filter(x => x.trim()).length >= 2;
@@ -959,8 +959,8 @@
         }
 
         function soalBerikutnya() {
-            if (sesiUjian.currentIndex < sesiUjian.soal.length - 1) {
-                sesiUjian.currentIndex++;
+            if (sesites.currentIndex < sesites.soal.length - 1) {
+                sesites.currentIndex++;
                 renderSoal();
             } else {
                 konfirmasiSelesai();
@@ -968,15 +968,15 @@
         }
 
         function soalSebelumnya() {
-            if (sesiUjian.currentIndex > 0) {
-                sesiUjian.currentIndex--;
+            if (sesites.currentIndex > 0) {
+                sesites.currentIndex--;
                 renderSoal();
             }
         }
 
         function konfirmasiSelesai() {
             let unansweredIdx = -1;
-            for (let i = 0; i < sesiUjian.soal.length; i++) {
+            for (let i = 0; i < sesites.soal.length; i++) {
                 if (!cekSudahDijawab(i)) {
                     unansweredIdx = i;
                     break;
@@ -985,23 +985,23 @@
 
             if (unansweredIdx !== -1) {
                 alert(`Masih ada soal yang belum dijawab atau belum memenuhi syarat ketentuan (Cek Soal No. ${unansweredIdx + 1}). Anda akan diarahkan ke soal tersebut.`);
-                sesiUjian.currentIndex = unansweredIdx;
+                sesites.currentIndex = unansweredIdx;
                 renderSoal();
                 return;
             }
 
-            if (confirm("Apakah Anda yakin ingin menyelesaikan ujian dan mengirimkan jawaban?")) {
+            if (confirm("Apakah Anda yakin ingin menyelesaikan tes dan mengirimkan jawaban?")) {
                 clearInterval(timerInterval);
                 hitungDanKirimHasil(false);
             }
         }
 
         function hitungDanKirimHasil(isWaktuHabis) {
-            let totalSkorMaks = sesiUjian.soal.length * 3;
+            let totalSkorMaks = sesites.soal.length * 3;
             let perolehanSkorTotal = 0;
 
-            sesiUjian.soal.forEach((s, idx) => {
-                let userAns = sesiUjian.jawaban[idx] || "";
+            sesites.soal.forEach((s, idx) => {
+                let userAns = sesites.jawaban[idx] || "";
                 let skorSoal = 0;
 
                 if (s.type === 'mc') {
@@ -1039,20 +1039,20 @@
             let persentase = totalSkorMaks > 0 ? (perolehanSkorTotal / totalSkorMaks) * 100 : 0;
             let nilaiAkhirSkala100 = Math.round(persentase);
 
-            sesiUjian.skor = nilaiAkhirSkala100;
-            sesiUjian.persentase = persentase;
-            sesiUjian.perolehanSkorTotal = perolehanSkorTotal;
-            sesiUjian.totalSkorMaks = totalSkorMaks;
+            sesites.skor = nilaiAkhirSkala100;
+            sesites.persentase = persentase;
+            sesites.perolehanSkorTotal = perolehanSkorTotal;
+            sesites.totalSkorMaks = totalSkorMaks;
 
             renderEvaluasiHasil();
 
-            document.getElementById('view-ujian').classList.add('hidden');
+            document.getElementById('view-tes').classList.add('hidden');
             document.getElementById('view-hasil').classList.remove('hidden');
 
             kirimRekapKeServer({
-                nama: sesiUjian.nama,
-                nisn: sesiUjian.nisn,
-                paket: sesiUjian.paketTitle,
+                nama: sesites.nama,
+                nisn: sesites.nisn,
+                paket: sesites.paketTitle,
                 skor: nilaiAkhirSkala100,
                 benar: perolehanSkorTotal,
                 salah: totalSkorMaks - perolehanSkorTotal,
@@ -1062,27 +1062,27 @@
 
         function renderEvaluasiHasil() {
             const evalPesanDiv = document.getElementById('eval-pesan-skor');
-            let p = sesiUjian.persentase;
+            let p = sesites.persentase;
             
             if (p < 74) {
                 evalPesanDiv.className = "p-3 rounded-xl font-bold text-sm bg-rose-100 text-rose-700";
-                evalPesanDiv.textContent = `Skor Total Tes: ${sesiUjian.perolehanSkorTotal} dari ${sesiUjian.totalSkorMaks} (${Math.round(p)}%) — Nilai anda KURANG, jangan patah semangat dan lebih giat belajar`;
+                evalPesanDiv.textContent = `Skor Total Tes: ${sesites.perolehanSkorTotal} dari ${sesites.totalSkorMaks} (${Math.round(p)}%) — Nilai anda KURANG, jangan patah semangat dan lebih giat belajar`;
             } else if (p >= 75 && p <= 83) {
                 evalPesanDiv.className = "p-3 rounded-xl font-bold text-sm bg-amber-100 text-amber-800";
-                evalPesanDiv.textContent = `Skor Total Tes: ${sesiUjian.perolehanSkorTotal} dari ${sesiUjian.totalSkorMaks} (${Math.round(p)}%) — Nilai anda CUKUP, tetap semangat giat belajar`;
+                evalPesanDiv.textContent = `Skor Total Tes: ${sesites.perolehanSkorTotal} dari ${sesites.totalSkorMaks} (${Math.round(p)}%) — Nilai anda CUKUP, tetap semangat giat belajar`;
             } else if (p >= 84 && p <= 92) {
                 evalPesanDiv.className = "p-3 rounded-xl font-bold text-sm bg-emerald-100 text-emerald-700";
-                evalPesanDiv.textContent = `Skor Total Tes: ${sesiUjian.perolehanSkorTotal} dari ${sesiUjian.totalSkorMaks} (${Math.round(p)}%) — Nilai anda BAIK, tetap semangat giत belajar`;
+                evalPesanDiv.textContent = `Skor Total Tes: ${sesites.perolehanSkorTotal} dari ${sesites.totalSkorMaks} (${Math.round(p)}%) — Nilai anda BAIK, tetap semangat giत belajar`;
             } else {
                 evalPesanDiv.className = "p-3 rounded-xl font-bold text-sm bg-blue-100 text-blue-700";
-                evalPesanDiv.textContent = `Skor Total Tes: ${sesiUjian.perolehanSkorTotal} dari ${sesiUjian.totalSkorMaks} (${Math.round(p)}%) — Nilai anda SANGAT BAIK, tetap semangat giat belajar`;
+                evalPesanDiv.textContent = `Skor Total Tes: ${sesites.perolehanSkorTotal} dari ${sesites.totalSkorMaks} (${Math.round(p)}%) — Nilai anda SANGAT BAIK, tetap semangat giat belajar`;
             }
 
             const containerList = document.getElementById('eval-container-list');
             containerList.innerHTML = '';
             const hurufOpsi = ['A', 'B', 'C', 'D', 'E'];
 
-            sesiUjian.soal.forEach((s, idx) => {
+            sesites.soal.forEach((s, idx) => {
                 let card = document.createElement('div');
                 card.className = "bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-3 watermark-bg";
                 
@@ -1095,7 +1095,7 @@
                 `;
 
                 let bodyHtml = '';
-                let userAns = sesiUjian.jawaban[idx] || "";
+                let userAns = sesites.jawaban[idx] || "";
 
                 if (s.type === 'mc') {
                     bodyHtml += '<div class="space-y-3">';
