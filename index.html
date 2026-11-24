@@ -28,6 +28,16 @@
             position: relative;
             z-index: 1;
         }
+        .soal-judul-format {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+        .soal-teks-format {
+            text-align: justify;
+            white-space: pre-line;
+            line-height: 1.7;
+        }
         @media print {
             body { background: white; color: black; font-size: 12pt; }
             header, button, nav, #modal-admin, #modal-pin { display: none !important; }
@@ -62,22 +72,25 @@
                     <img id="logo-preview-login" src="https://lh3.googleusercontent.com/d/1MdFkqvAdllgeAjiCdkeD8g2z6nX710zu" alt="Logo Sekolah" class="h-24 object-contain">
                 </div>
                 <div class="bg-blue-600 text-white py-3 px-4 rounded-xl font-bold text-base shadow-sm">
-                    SELAMAT DATANG PESERTA TES KEMAMPUAN AKADEMIK
+                    SELAMAT DATANG PESERTA TES KEMAMPUAN AKADEMIK (TKA) 2026/2027
                 </div>
-                <p class="text-black text-sm leading-relaxed px-2">
-                    Tes ini merupakan latihan untuk mempersiapkan murid mengikuti TKA, serta sebagai gambaran umum pelaksanaan TKA. Bentuk soal serta tampilan aplikasi pada tes ini mungkin berbeda dengan TKA yang sebenarnya. Kerjakan tes dengan cermat, jangan tergesa-gesa, namun harus dapat memanfaatkan waktu dengan sebaik-baiknya. Selamat mengikuti tes, semoga sukses!
+                <p class="text-black text-sm leading-relaxed px-2 text-center">
+                    Tes ini merupakan latihan untuk mempersiapkan murid mengikuti TKA, serta sebagai gambaran umum pelaksanaan TKA. Bentuk soal serta tampilan aplikasi pada tes ini mungkin berbeda dengan TKA yang sebenarnya. Kerjakan tes dengan cermat, jangan tergesa-gesa, namun harus dapat memanfaatkan waktu dengan sebaik-baiknya.
                 </p>
-            </div>
+                <p class="text-black text-sm leading-relaxed px-2 font-bold text-center">
+                    Selamat mengikuti tes, semoga sukses!
+                </p>
+                </div>
 
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <h2 class="text-lg font-bold text-indigo-700 mb-4">Login Peserta tes</h2>
-                <form id="form-login" onsubmit="mulaites(event)" class="space-y-4">
+                <h2 class="text-lg font-bold text-indigo-700 mb-4">Login Peserta Tes</h2>
+                <form id="form-login" onsubmit="mulaiTes(event)" class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium mb-1">Nama Lengkap</label>
                         <input type="text" id="input-nama" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-1">NISN / Nomor tes</label>
+                        <label class="block text-sm font-medium mb-1">NISN / Nomor Tes</label>
                         <input type="text" id="input-nisn" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
                     </div>
                     <div>
@@ -87,11 +100,11 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-1">Token tes</label>
+                        <label class="block text-sm font-medium mb-1">Token Tes</label>
                         <input type="text" id="input-token" required placeholder="Masukkan token dari admin" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none uppercase font-bold tracking-wider">
                     </div>
                     <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 rounded-lg transition">
-                        Mulai tes
+                        Mulai Tes
                     </button>
                 </form>
             </div>
@@ -101,8 +114,8 @@
             </div>
         </div>
 
-        <!-- HALAMAN 2: RUANG tes -->
-        <div id="view-tes" class="hidden space-y-4">
+        <!-- HALAMAN 2: RUANG Tes -->
+        <div id="view-Tes" class="hidden space-y-4">
             <div class="bg-white p-4 rounded-xl shadow-sm border flex justify-between items-center">
                 <div>
                     <p class="text-xs text-slate-500">Peserta: <span id="lbl-nama" class="font-bold text-slate-700"></span></p>
@@ -138,7 +151,7 @@
                         <div class="flex items-center space-x-2"><span class="w-3 h-3 bg-slate-200 rounded-sm inline-block"></span><span>Belum Dijawab</span></div>
                     </div>
                     <button type="button" onclick="konfirmasiSelesai()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded-lg text-sm font-medium transition mt-4">
-                        Selesai tes
+                        Selesai Tes
                     </button>
                 </div>
             </div>
@@ -147,15 +160,14 @@
         <!-- HALAMAN 3: HASIL & EVALUASI -->
         <div id="view-hasil" class="hidden space-y-4">
             <div class="bg-white p-6 rounded-2xl shadow-sm border text-center space-y-3 watermark-bg">
-                <h2 class="text-xl font-bold text-slate-800">Evaluasi Hasil tes</h2>
+                <h2 class="text-xl font-bold text-slate-800">Evaluasi Hasil Tes</h2>
                 <div id="eval-pesan-skor" class="p-3 rounded-xl font-bold text-sm"></div>
                 
-                <!-- Keterangan Arti Warna -->
                 <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-left text-xs space-y-2 mt-2">
                     <p class="font-bold text-slate-700 mb-1">Keterangan Arti Warna pada Evaluasi:</p>
                     <div class="flex items-start space-x-2">
                         <span class="w-3 h-3 bg-blue-600 rounded-full mt-0.5 shrink-0"></span>
-                        <p><strong class="text-blue-700">BIRU:</strong> Menandakan pilihan atau jawaban yang dipilih oleh peserta tes (sesuai kunci jawaban).</p>
+                        <p><strong class="text-blue-700">BIRU:</strong> Menandakan pilihan atau jawaban yang dipilih oleh peserta Tes (sesuai kunci jawaban).</p>
                     </div>
                     <div class="flex items-start space-x-2">
                         <span class="w-3 h-3 bg-rose-600 rounded-full mt-0.5 shrink-0"></span>
@@ -170,7 +182,6 @@
 
             <div id="eval-container-list" class="space-y-4"></div>
 
-            <!-- Tombol Download Soal Tanpa Kunci di Bawah Evaluasi -->
             <div class="bg-white p-6 rounded-2xl shadow-sm border text-center space-y-3">
                 <h3 class="font-bold text-sm text-slate-700">Unduh Lembar Soal (Tanpa Kunci Jawaban)</h3>
                 <p class="text-xs text-slate-500">Anda dapat mengunduh atau mencetak lembar soal latihan ini untuk keperluan belajar mandiri.</p>
@@ -221,12 +232,11 @@
                 <div id="admin-content-impor" class="space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="space-y-1">
-                            <label class="block text-xs font-medium text-slate-600">Token tes Aktif</label>
+                            <label class="block text-xs font-medium text-slate-600">Token Tes Aktif</label>
                             <input type="text" id="admin-token" placeholder="Cth: TKA2026" class="w-full px-3 py-2 border rounded-lg text-sm uppercase font-bold outline-none focus:ring-2 focus:ring-indigo-500">
                         </div>
                     </div>
 
-                    <!-- PENGATURAN UBAH PIN -->
                     <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl space-y-3">
                         <h4 class="font-bold text-sm text-slate-700">Keamanan & Ubah PIN Admin</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -298,7 +308,7 @@
 
         let dbPaket = JSON.parse(localStorage.getItem('cbt_paket_soal')) || [];
         let paketDurasi = JSON.parse(localStorage.getItem('cbt_paket_durasi')) || {};
-        let sesites = { nama: '', nisn: '', paketId: '', paketTitle: '', soal: [], rawSoalAsli: [], jawaban: {}, ragu: {}, currentIndex: 0, skor: 0, durasiMenit: 60 };
+        let sesiTes = { nama: '', nisn: '', paketId: '', paketTitle: '', soal: [], rawSoalAsli: [], jawaban: {}, ragu: {}, currentIndex: 0, skor: 0, durasiMenit: 60 };
         let globalRekapCache = [];
         let timerInterval = null;
         let sisaDetik = 3600;
@@ -501,7 +511,8 @@
 
             let csvContent = "data:text/csv;charset=utf-8,Waktu,Nama,NISN,Paket,Skor,Benar,Salah,Total\n";
             filtered.forEach(row => {
-                csvContent += row.join(",") + "\n";
+                let safeRow = row.map(cell => `"${String(cell ?? '').replace(/"/g, '""')}"`);
+                csvContent += safeRow.join(",") + "\n";
             });
 
             let encodedUri = encodeURI(csvContent);
@@ -555,17 +566,31 @@
         function downloadPdfPaketAdmin(paketId) {
             const paket = dbPaket.find(p => p.id === paketId);
             if (!paket) return;
-            // Kirim salinan mendalam agar objek asli di dbPaket tidak termutasi permanen
             let paketCopy = JSON.parse(JSON.stringify(paket));
             generatePrintView(paketCopy, true);
         }
 
         function downloadSoalTanpaKunci() {
             let dummyPaket = {
-                title: sesites.paketTitle,
-                questions: JSON.parse(JSON.stringify(sesites.rawSoalAsli))
+                title: sesiTes.paketTitle,
+                questions: JSON.parse(JSON.stringify(sesiTes.rawSoalAsli))
             };
             generatePrintView(dummyPaket, false);
+        }
+
+        // Memisahkan judul hanya jika teks diawali blok <b>...</b> yang berdiri sendiri sebagai judul
+        // (diikuti baris baru/enter), sementara bold/italic/underline di kalimat tetap pada posisinya.
+        function extractStandaloneHeaderTitle(text) {
+            let trimmed = String(text || "").trim();
+            let match = trimmed.match(/^<b>([\s\S]+?)<\/b>(?:\r?\n)+([\s\S]+)$/i);
+            if (match) {
+                return { headerTitle: match[1].trim(), bodyText: match[2].trim() };
+            }
+            let singleTitleMatch = trimmed.match(/^<b>([\s\S]+?)<\/b>$/i);
+            if (singleTitleMatch) {
+                return { headerTitle: singleTitleMatch[1].trim(), bodyText: "" };
+            }
+            return { headerTitle: "", bodyText: trimmed };
         }
 
         function parsePaketSoalForPrint(questions) {
@@ -573,19 +598,34 @@
                 let cols = [];
                 let rows = [];
                 let options = q.options || [];
-                let rawQText = String(q.question || "");
+                let rawQText = String(q.question || "").trim();
+
+                let headerTitle = "";
+                let bodyText = rawQText;
 
                 if (q.type === 'grid') {
-                    cols = options.length > 0 ? options : ["Benar", "Salah"];
-                    let qParts = rawQText.split('|').map(x => x.trim());
-                    if (qParts.length > 1) {
-                        rawQText = qParts[0];
-                        rows = qParts.slice(1);
-                    } else {
-                        rows = [rawQText];
+                    let parts = rawQText.split('|').map(x => x.trim()).filter(x => x.length > 0);
+                    
+                    if (parts.length > 0) {
+                        let extracted = extractStandaloneHeaderTitle(parts[0]);
+                        headerTitle = extracted.headerTitle;
+                        bodyText = extracted.bodyText;
+                        rows = parts.slice(1);
                     }
+
+                    if (rows.length === 0) {
+                        rows = [bodyText];
+                        bodyText = "";
+                    }
+                    
+                    cols = options.length > 0 ? options : ["Sesuai", "Tidak Sesuai"];
+                } else {
+                    let extracted = extractStandaloneHeaderTitle(rawQText);
+                    headerTitle = extracted.headerTitle;
+                    bodyText = extracted.bodyText;
                 }
-                return { ...q, question: rawQText, options, cols, rows };
+
+                return { ...q, headerTitle, question: bodyText, rawFullQuestion: rawQText, options, cols, rows };
             });
         }
 
@@ -619,6 +659,8 @@
                         }
                         .watermark-bg > * { position: relative; z-index: 1; }
                         .soal-item { break-inside: avoid; background: white; border: 1px solid #cbd5e1; border-radius: 1rem; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+                        .soal-judul-format { text-align: center; font-weight: bold; margin-bottom: 12px; }
+                        .soal-teks-format { text-align: justify; white-space: pre-line; line-height: 1.7; }
                     </style>
                 </head>
                 <body class="bg-white">
@@ -639,8 +681,14 @@
                         <span class="text-sm font-bold text-indigo-600">Soal No. ${idx + 1}</span>
                         <span class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded">Skor Maks: 3</span>
                     </div>
-                    <p class="font-medium text-slate-800 text-base leading-relaxed">${s.question}</p>
                 `;
+
+                if (s.headerTitle) {
+                    htmlContent += `<h4 class="soal-judul-format text-slate-900 text-base">${s.headerTitle}</h4>`;
+                }
+                if (s.question) {
+                    htmlContent += `<p class="font-medium text-slate-800 text-base leading-relaxed soal-teks-format">${s.question}</p>`;
+                }
 
                 if (s.type === 'mc') {
                     htmlContent += '<p class="text-xs text-indigo-600 mb-2 font-semibold">* Pilih 1 jawaban yang benar</p><div class="space-y-2.5">';
@@ -650,7 +698,7 @@
                         let styleBox = isKunci ? "border-2 border-emerald-500 bg-emerald-50/50 font-bold text-emerald-800" : "border border-slate-200 bg-white text-slate-700";
                         
                         htmlContent += `
-                            <div class="flex items-start space-x-3 p-3 rounded-xl ${styleBox}">
+                            <div class="flex items-start space-x-3 p-3.5 rounded-xl ${styleBox}">
                                 <div class="mt-0.5 w-4 h-4 rounded-full border border-slate-400 bg-white flex items-center justify-center shrink-0"></div>
                                 <div class="flex items-start space-x-2">
                                     <span class="font-bold min-w-[20px]">${kode}.</span>
@@ -671,7 +719,7 @@
                         let styleBox = isKunci ? "border-2 border-emerald-500 bg-emerald-50/50 font-bold text-emerald-800" : "border border-slate-200 bg-white text-slate-700";
 
                         htmlContent += `
-                            <div class="flex items-start space-x-3 p-3 rounded-xl ${styleBox}">
+                            <div class="flex items-start space-x-3 p-3.5 rounded-xl ${styleBox}">
                                 <div class="mt-0.5 w-4 h-4 rounded-sm border border-slate-400 bg-white shrink-0"></div>
                                 <div class="flex items-start space-x-2">
                                     <span class="font-bold min-w-[20px]">${kode}.</span>
@@ -684,12 +732,12 @@
 
                 } else if (s.type === 'grid') {
                     htmlContent += '<p class="text-xs text-indigo-600 mb-2 font-semibold">* Jawab semua pernyataan pada tabel</p><div class="overflow-x-auto border rounded-xl"><table class="w-full text-sm border-collapse bg-white"><thead><tr class="bg-slate-100 text-slate-700"><th class="p-3 border text-left">Pernyataan</th>';
-                    let cols = s.cols && s.cols.length > 0 ? s.cols : ["Benar", "Salah"];
+                    let cols = s.cols && s.cols.length > 0 ? s.cols : ["Sesuai", "Tidak Sesuai"];
                     cols.forEach(c => { htmlContent += `<th class="p-3 border text-center font-semibold">${c}</th>`; });
                     htmlContent += '</tr></thead><tbody>';
 
                     let kunciArr = includeKey ? String(s.answer || "").split(',').map(x => x.trim()) : [];
-                    let rows = s.rows && s.rows.length > 0 ? s.rows : [s.question];
+                    let rows = s.rows && s.rows.length > 0 ? s.rows : [];
 
                     rows.forEach((rowText, rIdx) => {
                         htmlContent += `<tr class="border-b"><td class="p-3 border text-slate-700 font-medium">${rowText}</td>`;
@@ -732,7 +780,7 @@
             }
         }
 
-        function mulaites(e) {
+        function mulaiTes(e) {
             e.preventDefault();
             const nama = document.getElementById('input-nama').value;
             const nisn = document.getElementById('input-nisn').value;
@@ -741,7 +789,7 @@
             const savedToken = localStorage.getItem('cbt_token') || 'TKA2026';
 
             if (tokenInput !== savedToken) {
-                alert("Token tes salah! Silakan minta token yang benar kepada Administrator.");
+                alert("Token Tes salah! Silakan minta token yang benar kepada Administrator.");
                 return;
             }
 
@@ -755,7 +803,7 @@
             let parsedQuestions = parsePaketSoalForPrint(paketDipilih.questions);
             let durasiMenit = paketDurasi[paketId] || 60;
 
-            sesites = {
+            sesiTes = {
                 nama: nama,
                 nisn: nisn,
                 paketId: paketId,
@@ -772,7 +820,7 @@
             document.getElementById('lbl-paket').textContent = paketDipilih.title;
 
             document.getElementById('view-login').classList.add('hidden');
-            document.getElementById('view-tes').classList.remove('hidden');
+            document.getElementById('view-Tes').classList.remove('hidden');
 
             sisaDetik = durasiMenit * 60;
             mulaiTimer();
@@ -785,7 +833,7 @@
             timerInterval = setInterval(() => {
                 if (sisaDetik <= 0) {
                     clearInterval(timerInterval);
-                    alert("Waktu tes telah habis!");
+                    alert("Waktu Tes telah habis!");
                     hitungDanKirimHasil(true);
                     return;
                 }
@@ -797,16 +845,22 @@
         }
 
         function renderSoal() {
-            const s = sesites.soal[sesites.currentIndex];
-            document.getElementById('lbl-nomor-soal').textContent = `Soal No. ${sesites.currentIndex + 1} dari ${sesites.soal.length}`;
+            const s = sesiTes.soal[sesiTes.currentIndex];
+            document.getElementById('lbl-nomor-soal').textContent = `Soal No. ${sesiTes.currentIndex + 1} dari ${sesiTes.soal.length}`;
             document.getElementById('lbl-bobot').textContent = `Skor Maks: 3`;
 
-            let html = `<p class="font-medium text-slate-800 text-base mb-4 leading-relaxed">${s.question}</p>`;
+            let html = "";
+            if (s.headerTitle) {
+                html += `<h4 class="soal-judul-format text-slate-900 text-base">${s.headerTitle}</h4>`;
+            }
+            if (s.question) {
+                html += `<p class="font-medium text-slate-800 text-base mb-4 soal-teks-format">${s.question}</p>`;
+            }
 
             if (s.type === 'mc') {
                 html += '<p class="text-xs text-indigo-600 mb-3 font-semibold">* Pilih 1 jawaban yang benar</p><div class="space-y-3">';
                 const hurufOpsi = ['A', 'B', 'C', 'D', 'E'];
-                let currentAns = sesites.jawaban[sesites.currentIndex] || '';
+                let currentAns = sesiTes.jawaban[sesiTes.currentIndex] || '';
                 s.options.forEach((opt, idx) => {
                     let kodeOpsi = hurufOpsi[idx] || (idx + 1);
                     let checked = currentAns === kodeOpsi ? 'checked' : '';
@@ -824,7 +878,7 @@
             } else if (s.type === 'checkbox') {
                 html += '<p class="text-xs text-indigo-600 mb-3 font-semibold">* Pilih minimal 2 jawaban yang benar</p><div class="space-y-3">';
                 const hurufOpsi = ['A', 'B', 'C', 'D', 'E'];
-                let savedAns = sesites.jawaban[sesites.currentIndex] ? sesites.jawaban[sesites.currentIndex].split(',') : [];
+                let savedAns = sesiTes.jawaban[sesiTes.currentIndex] ? sesiTes.jawaban[sesiTes.currentIndex].split(',') : [];
                 s.options.forEach((opt, idx) => {
                     let kodeOpsi = hurufOpsi[idx] || (idx + 1);
                     let checked = savedAns.includes(kodeOpsi) ? 'checked' : '';
@@ -841,12 +895,12 @@
                 html += '</div>';
             } else if (s.type === 'grid') {
                 html += '<p class="text-xs text-indigo-600 mb-3 font-semibold">* Jawab semua pernyataan pada tabel</p><div class="overflow-x-auto border rounded-xl"><table class="w-full text-sm border-collapse bg-white"><thead><tr class="bg-slate-100 text-slate-700"><th class="p-3 border text-left">Pernyataan</th>';
-                let cols = s.cols.length > 0 ? s.cols : ["Benar", "Salah"];
+                let cols = s.cols.length > 0 ? s.cols : ["Sesuai", "Tidak Sesuai"];
                 cols.forEach(c => { html += `<th class="p-3 border text-center font-semibold">${c}</th>`; });
                 html += '</tr></thead><tbody>';
                 
-                let savedGrid = sesites.jawaban[sesites.currentIndex] ? sesites.jawaban[sesites.currentIndex].split(',') : [];
-                let rows = s.rows.length > 0 ? s.rows : [s.question];
+                let savedGrid = sesiTes.jawaban[sesiTes.currentIndex] ? sesiTes.jawaban[sesiTes.currentIndex].split(',') : [];
+                let rows = s.rows.length > 0 ? s.rows : [];
                 rows.forEach((rowText, rIdx) => {
                     html += `<tr class="border-b hover:bg-slate-50"><td class="p-3 border text-slate-700 font-medium">${rowText}</td>`;
                     cols.forEach((_, cIdx) => {
@@ -859,11 +913,11 @@
             }
 
             document.getElementById('container-soal').innerHTML = html;
-            document.getElementById('btn-prev').style.display = sesites.currentIndex === 0 ? 'none' : 'block';
-            document.getElementById('btn-next').textContent = sesites.currentIndex === sesites.soal.length - 1 ? 'Selesai tes' : 'Selanjutnya';
+            document.getElementById('btn-prev').style.display = sesiTes.currentIndex === 0 ? 'none' : 'block';
+            document.getElementById('btn-next').textContent = sesiTes.currentIndex === sesiTes.soal.length - 1 ? 'Selesai Tes' : 'Selanjutnya';
             
             const btnRagu = document.getElementById('btn-ragu');
-            if (sesites.ragu[sesites.currentIndex]) {
+            if (sesiTes.ragu[sesiTes.currentIndex]) {
                 btnRagu.className = "bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition";
                 btnRagu.textContent = "Batal Ragu";
             } else {
@@ -875,7 +929,7 @@
         }
 
         function simpanJawaban(val) {
-            sesites.jawaban[sesites.currentIndex] = val;
+            sesiTes.jawaban[sesiTes.currentIndex] = val;
             renderPalette();
         }
 
@@ -883,17 +937,17 @@
             let checkedBoxes = document.querySelectorAll('.cb-opsi:checked');
             if (checkedBoxes.length > 0) {
                 let vals = Array.from(checkedBoxes).map(cb => cb.value).join(',');
-                sesites.jawaban[sesites.currentIndex] = vals;
+                sesiTes.jawaban[sesiTes.currentIndex] = vals;
             } else {
-                delete sesites.jawaban[sesites.currentIndex];
+                delete sesiTes.jawaban[sesiTes.currentIndex];
             }
             renderPalette();
         }
 
         function simpanGrid() {
             let gridAns = [];
-            let s = sesites.soal[sesites.currentIndex];
-            let rows = s.rows.length > 0 ? s.rows : [s.question];
+            let s = sesiTes.soal[sesiTes.currentIndex];
+            let rows = s.rows.length > 0 ? s.rows : [];
             let adaTerisi = false;
             rows.forEach((_, rIdx) => {
                 let selected = document.querySelector(`input.grid-row-${rIdx}:checked`);
@@ -905,16 +959,16 @@
                 }
             });
             if (adaTerisi) {
-                sesites.jawaban[sesites.currentIndex] = gridAns.join(',');
+                sesiTes.jawaban[sesiTes.currentIndex] = gridAns.join(',');
             } else {
-                delete sesites.jawaban[sesites.currentIndex];
+                delete sesiTes.jawaban[sesiTes.currentIndex];
             }
             renderPalette();
         }
 
         function tandaiRagu() {
-            let idx = sesites.currentIndex;
-            sesites.ragu[idx] = !sesites.ragu[idx];
+            let idx = sesiTes.currentIndex;
+            sesiTes.ragu[idx] = !sesiTes.ragu[idx];
             renderSoal();
         }
 
@@ -922,21 +976,21 @@
             const container = document.getElementById('palette-grid');
             if (!container) return;
             container.innerHTML = '';
-            sesites.soal.forEach((s, idx) => {
+            sesiTes.soal.forEach((s, idx) => {
                 let btn = document.createElement('button');
                 btn.type = 'button';
-                let isRagu = sesites.ragu[idx];
+                let isRagu = sesiTes.ragu[idx];
                 let hasAnswer = cekSudahDijawab(idx);
 
                 let bgClass = "bg-slate-200 text-slate-700 hover:bg-slate-300";
                 if (hasAnswer) bgClass = "bg-blue-600 text-white hover:bg-blue-700";
                 if (isRagu) bgClass = "bg-amber-400 text-slate-900 hover:bg-amber-500";
-                if (idx === sesites.currentIndex) bgClass += " ring-2 ring-offset-2 ring-indigo-600 font-bold";
+                if (idx === sesiTes.currentIndex) bgClass += " ring-2 ring-offset-2 ring-indigo-600 font-bold";
 
                 btn.className = `p-2 rounded-lg text-xs font-semibold transition ${bgClass}`;
                 btn.textContent = idx + 1;
                 btn.onclick = () => {
-                    sesites.currentIndex = idx;
+                    sesiTes.currentIndex = idx;
                     renderSoal();
                 };
                 container.appendChild(btn);
@@ -944,14 +998,14 @@
         }
 
         function cekSudahDijawab(idx) {
-            let s = sesites.soal[idx];
-            let ans = sesites.jawaban[idx];
+            let s = sesiTes.soal[idx];
+            let ans = sesiTes.jawaban[idx];
             if (ans === undefined || ans === null || ans === "") return false;
             if (s.type === 'mc') return String(ans).trim().length > 0;
             if (s.type === 'checkbox') return String(ans).split(',').filter(x => x.trim()).length >= 2;
             if (s.type === 'grid') {
                 let parts = String(ans).split(',');
-                let rows = s.rows.length > 0 ? s.rows : [s.question];
+                let rows = s.rows.length > 0 ? s.rows : [];
                 if (parts.length < rows.length) return false;
                 return parts.every(p => p !== undefined && p !== '' && p !== null);
             }
@@ -959,8 +1013,8 @@
         }
 
         function soalBerikutnya() {
-            if (sesites.currentIndex < sesites.soal.length - 1) {
-                sesites.currentIndex++;
+            if (sesiTes.currentIndex < sesiTes.soal.length - 1) {
+                sesiTes.currentIndex++;
                 renderSoal();
             } else {
                 konfirmasiSelesai();
@@ -968,15 +1022,15 @@
         }
 
         function soalSebelumnya() {
-            if (sesites.currentIndex > 0) {
-                sesites.currentIndex--;
+            if (sesiTes.currentIndex > 0) {
+                sesiTes.currentIndex--;
                 renderSoal();
             }
         }
 
         function konfirmasiSelesai() {
             let unansweredIdx = -1;
-            for (let i = 0; i < sesites.soal.length; i++) {
+            for (let i = 0; i < sesiTes.soal.length; i++) {
                 if (!cekSudahDijawab(i)) {
                     unansweredIdx = i;
                     break;
@@ -985,23 +1039,23 @@
 
             if (unansweredIdx !== -1) {
                 alert(`Masih ada soal yang belum dijawab atau belum memenuhi syarat ketentuan (Cek Soal No. ${unansweredIdx + 1}). Anda akan diarahkan ke soal tersebut.`);
-                sesites.currentIndex = unansweredIdx;
+                sesiTes.currentIndex = unansweredIdx;
                 renderSoal();
                 return;
             }
 
-            if (confirm("Apakah Anda yakin ingin menyelesaikan tes dan mengirimkan jawaban?")) {
+            if (confirm("Apakah Anda yakin ingin menyelesaikan Tes dan mengirimkan jawaban?")) {
                 clearInterval(timerInterval);
                 hitungDanKirimHasil(false);
             }
         }
 
         function hitungDanKirimHasil(isWaktuHabis) {
-            let totalSkorMaks = sesites.soal.length * 3;
+            let totalSkorMaks = sesiTes.soal.length * 3;
             let perolehanSkorTotal = 0;
 
-            sesites.soal.forEach((s, idx) => {
-                let userAns = sesites.jawaban[idx] || "";
+            sesiTes.soal.forEach((s, idx) => {
+                let userAns = sesiTes.jawaban[idx] || "";
                 let skorSoal = 0;
 
                 if (s.type === 'mc') {
@@ -1039,20 +1093,20 @@
             let persentase = totalSkorMaks > 0 ? (perolehanSkorTotal / totalSkorMaks) * 100 : 0;
             let nilaiAkhirSkala100 = Math.round(persentase);
 
-            sesites.skor = nilaiAkhirSkala100;
-            sesites.persentase = persentase;
-            sesites.perolehanSkorTotal = perolehanSkorTotal;
-            sesites.totalSkorMaks = totalSkorMaks;
+            sesiTes.skor = nilaiAkhirSkala100;
+            sesiTes.persentase = persentase;
+            sesiTes.perolehanSkorTotal = perolehanSkorTotal;
+            sesiTes.totalSkorMaks = totalSkorMaks;
 
             renderEvaluasiHasil();
 
-            document.getElementById('view-tes').classList.add('hidden');
+            document.getElementById('view-Tes').classList.add('hidden');
             document.getElementById('view-hasil').classList.remove('hidden');
 
             kirimRekapKeServer({
-                nama: sesites.nama,
-                nisn: sesites.nisn,
-                paket: sesites.paketTitle,
+                nama: sesiTes.nama,
+                nisn: sesiTes.nisn,
+                paket: sesiTes.paketTitle,
                 skor: nilaiAkhirSkala100,
                 benar: perolehanSkorTotal,
                 salah: totalSkorMaks - perolehanSkorTotal,
@@ -1062,27 +1116,27 @@
 
         function renderEvaluasiHasil() {
             const evalPesanDiv = document.getElementById('eval-pesan-skor');
-            let p = sesites.persentase;
+            let p = sesiTes.persentase;
             
             if (p < 74) {
                 evalPesanDiv.className = "p-3 rounded-xl font-bold text-sm bg-rose-100 text-rose-700";
-                evalPesanDiv.textContent = `Skor Total Tes: ${sesites.perolehanSkorTotal} dari ${sesites.totalSkorMaks} (${Math.round(p)}%) — Nilai anda KURANG, jangan patah semangat dan lebih giat belajar`;
+                evalPesanDiv.textContent = `Skor Total Tes: ${sesiTes.perolehanSkorTotal} dari ${sesiTes.totalSkorMaks} (${Math.round(p)}%) — Nilai anda KURANG, jangan patah semangat dan lebih giat belajar`;
             } else if (p >= 75 && p <= 83) {
                 evalPesanDiv.className = "p-3 rounded-xl font-bold text-sm bg-amber-100 text-amber-800";
-                evalPesanDiv.textContent = `Skor Total Tes: ${sesites.perolehanSkorTotal} dari ${sesites.totalSkorMaks} (${Math.round(p)}%) — Nilai anda CUKUP, tetap semangat giat belajar`;
+                evalPesanDiv.textContent = `Skor Total Tes: ${sesiTes.perolehanSkorTotal} dari ${sesiTes.totalSkorMaks} (${Math.round(p)}%) — Nilai anda CUKUP, tetap semangat giat belajar`;
             } else if (p >= 84 && p <= 92) {
                 evalPesanDiv.className = "p-3 rounded-xl font-bold text-sm bg-emerald-100 text-emerald-700";
-                evalPesanDiv.textContent = `Skor Total Tes: ${sesites.perolehanSkorTotal} dari ${sesites.totalSkorMaks} (${Math.round(p)}%) — Nilai anda BAIK, tetap semangat giत belajar`;
+                evalPesanDiv.textContent = `Skor Total Tes: ${sesiTes.perolehanSkorTotal} dari ${sesiTes.totalSkorMaks} (${Math.round(p)}%) — Nilai anda BAIK, tetap semangat giat belajar`;
             } else {
                 evalPesanDiv.className = "p-3 rounded-xl font-bold text-sm bg-blue-100 text-blue-700";
-                evalPesanDiv.textContent = `Skor Total Tes: ${sesites.perolehanSkorTotal} dari ${sesites.totalSkorMaks} (${Math.round(p)}%) — Nilai anda SANGAT BAIK, tetap semangat giat belajar`;
+                evalPesanDiv.textContent = `Skor Total Tes: ${sesiTes.perolehanSkorTotal} dari ${sesiTes.totalSkorMaks} (${Math.round(p)}%) — Nilai anda SANGAT BAIK, tetap semangat giat belajar`;
             }
 
             const containerList = document.getElementById('eval-container-list');
             containerList.innerHTML = '';
             const hurufOpsi = ['A', 'B', 'C', 'D', 'E'];
 
-            sesites.soal.forEach((s, idx) => {
+            sesiTes.soal.forEach((s, idx) => {
                 let card = document.createElement('div');
                 card.className = "bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-3 watermark-bg";
                 
@@ -1091,11 +1145,17 @@
                         <span class="text-sm font-bold text-indigo-600">Soal No. ${idx + 1}</span>
                         <span class="text-xs bg-indigo-50 text-indigo-700 px-2 py-1 rounded font-bold">Skor Perolehan: ${s.skorPerolehan} / 3</span>
                     </div>
-                    <p class="font-medium text-slate-800 text-base leading-relaxed">${s.question}</p>
                 `;
 
+                if (s.headerTitle) {
+                    headerHtml += `<h4 class="soal-judul-format text-slate-900 text-base">${s.headerTitle}</h4>`;
+                }
+                if (s.question) {
+                    headerHtml += `<p class="font-medium text-slate-800 text-base leading-relaxed soal-teks-format">${s.question}</p>`;
+                }
+
                 let bodyHtml = '';
-                let userAns = sesites.jawaban[idx] || "";
+                let userAns = sesiTes.jawaban[idx] || "";
 
                 if (s.type === 'mc') {
                     bodyHtml += '<div class="space-y-3">';
@@ -1187,13 +1247,13 @@
 
                 } else if (s.type === 'grid') {
                     bodyHtml += '<div class="overflow-x-auto border rounded-xl"><table class="w-full text-sm border-collapse bg-white"><thead><tr class="bg-slate-100 text-slate-700"><th class="p-3 border text-left">Pernyataan</th>';
-                    let cols = s.cols.length > 0 ? s.cols : ["Benar", "Salah"];
+                    let cols = s.cols.length > 0 ? s.cols : ["Sesuai", "Tidak Sesuai"];
                     cols.forEach(c => { bodyHtml += `<th class="p-3 border text-center font-semibold">${c}</th>`; });
                     bodyHtml += '</tr></thead><tbody>';
 
                     let kunciArr = String(s.answer).split(',').map(x => x.trim());
                     let userArr = userAns ? userAns.split(',') : [];
-                    let rows = s.rows.length > 0 ? s.rows : [s.question];
+                    let rows = s.rows.length > 0 ? s.rows : [];
 
                     rows.forEach((rowText, rIdx) => {
                         let kunciCIdx = parseInt(kunciArr[rIdx]);
