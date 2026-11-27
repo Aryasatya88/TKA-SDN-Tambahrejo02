@@ -29,14 +29,18 @@
             z-index: 1;
         }
         .soal-judul-format {
-            text-align: center;
-            font-weight: bold;
-            margin-bottom: 12px;
+            text-align: center !important;
+            font-weight: bold !important;
+            margin-bottom: 16px;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
         .soal-teks-format {
-            text-align: justify;
+            text-align: justify !important;
             white-space: pre-line;
             line-height: 1.7;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
         @media print {
             body { background: white; color: black; font-size: 12pt; }
@@ -56,7 +60,7 @@
     <header class="bg-indigo-700 text-white shadow-md">
         <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
             <h1 class="text-xl font-bold">Get Ready to TKA SDN Tambahrejo 02</h1>
-            <button onclick="bukaAdmin()" class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition cursor-pointer">
+            <button type="button" onclick="bukaAdmin()" class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition cursor-pointer">
                 ⚙️ Menu Administrator
             </button>
         </div>
@@ -72,25 +76,22 @@
                     <img id="logo-preview-login" src="https://lh3.googleusercontent.com/d/1MdFkqvAdllgeAjiCdkeD8g2z6nX710zu" alt="Logo Sekolah" class="h-24 object-contain">
                 </div>
                 <div class="bg-blue-600 text-white py-3 px-4 rounded-xl font-bold text-base shadow-sm">
-                    SELAMAT DATANG PESERTA TES KEMAMPUAN AKADEMIK (TKA) 2026/2027
+                    SELAMAT DATANG PESERTA TES KEMAMPUAN AKADEMIK
                 </div>
-                <p class="text-black text-sm leading-relaxed px-2 text-center">
-                    Tes ini merupakan latihan untuk mempersiapkan murid mengikuti TKA, serta sebagai gambaran umum pelaksanaan TKA. Bentuk soal serta tampilan aplikasi pada tes ini mungkin berbeda dengan TKA yang sebenarnya. Kerjakan tes dengan cermat, jangan tergesa-gesa, namun harus dapat memanfaatkan waktu dengan sebaik-baiknya.
+                <p class="text-black text-sm leading-relaxed px-2 text-justify">
+                    Tes ini merupakan latihan untuk mempersiapkan murid mengikuti TKA, serta sebagai gambaran umum pelaksanaan TKA. Bentuk soal serta tampilan aplikasi pada tes ini mungkin berbeda dengan TKA yang sebenarnya. Kerjakan tes dengan cermat, jangan tergesa-gesa, namun harus dapat memanfaatkan waktu dengan sebaik-baiknya. Selamat mengikuti tes, semoga sukses!
                 </p>
-                <p class="text-black text-sm leading-relaxed px-2 font-bold text-center">
-                    Selamat mengikuti tes, semoga sukses!
-                </p>
-                </div>
+            </div>
 
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <h2 class="text-lg font-bold text-indigo-700 mb-4">Login Peserta Tes</h2>
-                <form id="form-login" onsubmit="mulaiTes(event)" class="space-y-4">
+                <h2 class="text-lg font-bold text-indigo-700 mb-4">Login Peserta Ujian</h2>
+                <form id="form-login" onsubmit="mulaiUjian(event)" class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium mb-1">Nama Lengkap</label>
                         <input type="text" id="input-nama" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-1">NISN / Nomor Tes</label>
+                        <label class="block text-sm font-medium mb-1">NISN / Nomor Ujian</label>
                         <input type="text" id="input-nisn" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
                     </div>
                     <div>
@@ -100,11 +101,11 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-1">Token Tes</label>
+                        <label class="block text-sm font-medium mb-1">Token Ujian</label>
                         <input type="text" id="input-token" required placeholder="Masukkan token dari admin" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none uppercase font-bold tracking-wider">
                     </div>
                     <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 rounded-lg transition">
-                        Mulai Tes
+                        Mulai Ujian
                     </button>
                 </form>
             </div>
@@ -114,8 +115,8 @@
             </div>
         </div>
 
-        <!-- HALAMAN 2: RUANG Tes -->
-        <div id="view-Tes" class="hidden space-y-4">
+        <!-- HALAMAN 2: RUANG UJIAN -->
+        <div id="view-ujian" class="hidden space-y-4">
             <div class="bg-white p-4 rounded-xl shadow-sm border flex justify-between items-center">
                 <div>
                     <p class="text-xs text-slate-500">Peserta: <span id="lbl-nama" class="font-bold text-slate-700"></span></p>
@@ -151,7 +152,7 @@
                         <div class="flex items-center space-x-2"><span class="w-3 h-3 bg-slate-200 rounded-sm inline-block"></span><span>Belum Dijawab</span></div>
                     </div>
                     <button type="button" onclick="konfirmasiSelesai()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded-lg text-sm font-medium transition mt-4">
-                        Selesai Tes
+                        Selesai Ujian
                     </button>
                 </div>
             </div>
@@ -160,14 +161,14 @@
         <!-- HALAMAN 3: HASIL & EVALUASI -->
         <div id="view-hasil" class="hidden space-y-4">
             <div class="bg-white p-6 rounded-2xl shadow-sm border text-center space-y-3 watermark-bg">
-                <h2 class="text-xl font-bold text-slate-800">Evaluasi Hasil Tes</h2>
+                <h2 class="text-xl font-bold text-slate-800">Evaluasi Hasil Ujian</h2>
                 <div id="eval-pesan-skor" class="p-3 rounded-xl font-bold text-sm"></div>
                 
                 <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-left text-xs space-y-2 mt-2">
                     <p class="font-bold text-slate-700 mb-1">Keterangan Arti Warna pada Evaluasi:</p>
                     <div class="flex items-start space-x-2">
                         <span class="w-3 h-3 bg-blue-600 rounded-full mt-0.5 shrink-0"></span>
-                        <p><strong class="text-blue-700">BIRU:</strong> Menandakan pilihan atau jawaban yang dipilih oleh peserta Tes (sesuai kunci jawaban).</p>
+                        <p><strong class="text-blue-700">BIRU:</strong> Menandakan pilihan atau jawaban yang dipilih oleh peserta ujian (sesuai kunci jawaban).</p>
                     </div>
                     <div class="flex items-start space-x-2">
                         <span class="w-3 h-3 bg-rose-600 rounded-full mt-0.5 shrink-0"></span>
@@ -204,12 +205,12 @@
                 🔒
             </div>
             <h3 class="font-bold text-lg text-slate-800">Autentikasi Admin</h3>
-            <p class="text-xs text-slate-500">Masukkan PIN Administrator untuk mengakses menu (PIN Default: <span class="font-bold text-slate-700">1234</span>)</p>
+            <p class="text-xs text-slate-500">Masukkan PIN Administrator untuk mengakses menu (tersimpan terpusat di Spreadsheet).</p>
             <form onsubmit="verifikasiPin(event)" class="space-y-3">
                 <input type="password" id="input-pin-admin" required placeholder="Masukkan PIN" class="w-full px-3 py-2 border rounded-lg text-center tracking-widest text-lg font-bold outline-none focus:ring-2 focus:ring-amber-500">
                 <div class="flex space-x-2">
                     <button type="button" onclick="tutupPinModal()" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 py-2 rounded-lg text-sm font-medium transition">Batal</button>
-                    <button type="submit" class="w-1/2 bg-amber-500 hover:bg-amber-600 text-white py-2 rounded-lg text-sm font-medium transition">Masuk</button>
+                    <button type="submit" id="btn-submit-pin" class="w-1/2 bg-amber-500 hover:bg-amber-600 text-white py-2 rounded-lg text-sm font-medium transition">Masuk</button>
                 </div>
             </form>
         </div>
@@ -232,13 +233,18 @@
                 <div id="admin-content-impor" class="space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="space-y-1">
-                            <label class="block text-xs font-medium text-slate-600">Token Tes Aktif</label>
-                            <input type="text" id="admin-token" placeholder="Cth: TKA2026" class="w-full px-3 py-2 border rounded-lg text-sm uppercase font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                            <label class="block text-xs font-medium text-slate-600">Token Ujian Aktif (Sinkron ke Sheet Pengaturan)</label>
+                            <div class="flex space-x-2">
+                                <input type="text" id="admin-token" placeholder="Cth: TKA2026" class="w-full px-3 py-2 border rounded-lg text-sm uppercase font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                                <button type="button" onclick="simpanTokenKeServer()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-4 py-2 rounded-lg font-medium transition shrink-0">
+                                    💾 Simpan Token
+                                </button>
+                            </div>
                         </div>
                     </div>
 
                     <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl space-y-3">
-                        <h4 class="font-bold text-sm text-slate-700">Keamanan & Ubah PIN Admin</h4>
+                        <h4 class="font-bold text-sm text-slate-700">Keamanan & Ubah PIN Admin (Sheet Pengaturan)</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <div class="space-y-1">
                                 <label class="block text-xs font-medium text-slate-600">PIN Sebelumnya</label>
@@ -257,10 +263,10 @@
                     <div class="space-y-1">
                         <label class="block text-xs font-medium text-slate-600">URL Web App Google Apps Script</label>
                         <input type="text" id="admin-url" readonly class="w-full px-3 py-2 border rounded-lg text-sm bg-slate-100 text-slate-600 outline-none">
-                        <p class="text-[11px] text-emerald-600 font-medium">✓ URL Web App sudah tertanam permanen dan otomatis menyinkronkan data.</p>
+                        <p class="text-[11px] text-emerald-600 font-medium">✓ URL Web App terhubung ke Google Sheets (Soal, Rekap Nilai, dan Pengaturan terpusat).</p>
                     </div>
                     <button type="button" onclick="sinkronisasiSoalManual()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded-lg text-sm font-medium transition">
-                        🔄 Tarik / Perbarui Soal Sekarang
+                        🔄 Tarik / Perbarui Soal & Pengaturan Sekarang
                     </button>
                     <hr>
                     <h4 class="font-bold text-sm text-slate-700">Daftar Paket Soal & Pengaturan Timer</h4>
@@ -271,7 +277,7 @@
                     <div class="flex flex-wrap justify-between items-center gap-2">
                         <h4 class="font-bold text-sm text-slate-700">Data Rekap Nilai dari Spreadsheet</h4>
                         <div class="flex items-center space-x-2">
-                            <select id="filter-rekap-paket" class="px-3 py-1 border rounded-lg text-xs bg-white outline-none">
+                            <select id="filter-rekap-paket" onchange="renderTabelRekap(globalRekapCache)" class="px-3 py-1 border rounded-lg text-xs bg-white outline-none">
                                 <option value="">-- Semua Paket Soal --</option>
                             </select>
                             <button type="button" onclick="downloadRekapPerPaket()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition">📥 Download Rekap Paket</button>
@@ -304,22 +310,40 @@
     </div>
 
     <script>
-        const PERMANENT_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby_xbwwkqlhGsA1I5uAG2dd8o1qHLYNFThAPD_QC2eu41WiDIDO6HznMOCQutvHJJtRVg/exec";
+        const PERMANENT_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbywDgySzlqV_x-zXzH6CV3MpEkbPhwhG8K4oOI_AN-vMn821wqVqgS6XavsPezOACSO/exec";
 
         let dbPaket = JSON.parse(localStorage.getItem('cbt_paket_soal')) || [];
         let paketDurasi = JSON.parse(localStorage.getItem('cbt_paket_durasi')) || {};
-        let sesiTes = { nama: '', nisn: '', paketId: '', paketTitle: '', soal: [], rawSoalAsli: [], jawaban: {}, ragu: {}, currentIndex: 0, skor: 0, durasiMenit: 60 };
+        let tokenAktifCache = localStorage.getItem('cbt_token_cache') || 'TKA2026';
+        let pinTerverifikasiSesi = "";
+
+        let sesiUjian = { nama: '', nisn: '', paketId: '', paketTitle: '', soal: [], rawSoalAsli: [], jawaban: {}, ragu: {}, currentIndex: 0, skor: 0, durasiMenit: 60 };
         let globalRekapCache = [];
         let timerInterval = null;
         let sisaDetik = 3600;
 
         document.addEventListener("DOMContentLoaded", () => {
-            localStorage.setItem('cbt_url_script', PERMANENT_SCRIPT_URL);
-            otomatisSinkronisasiSoal();
-
             document.getElementById('admin-url').value = PERMANENT_SCRIPT_URL;
-            document.getElementById('admin-token').value = localStorage.getItem('cbt_token') || 'TKA2026';
+            document.getElementById('admin-token').value = tokenAktifCache;
+            muatPilihanPaket();
+            otomatisSinkronisasiSoal();
+            sinkronisasiKonfigurasiPublik();
         });
+
+        async function sinkronisasiKonfigurasiPublik() {
+            try {
+                const res = await fetch(PERMANENT_SCRIPT_URL + "?action=config");
+                const data = await res.json();
+                if (data && data.token_ujian) {
+                    tokenAktifCache = String(data.token_ujian).trim().toUpperCase();
+                    localStorage.setItem('cbt_token_cache', tokenAktifCache);
+                    const adminTokenEl = document.getElementById('admin-token');
+                    if (adminTokenEl) adminTokenEl.value = tokenAktifCache;
+                }
+            } catch (err) {
+                console.log("Menggunakan cache token lokal:", err);
+            }
+        }
 
         async function otomatisSinkronisasiSoal() {
             try {
@@ -338,10 +362,10 @@
 
         async function sinkronisasiSoalManual() {
             localStorage.removeItem('cbt_paket_soal');
-            alert("Sedang memperbarui soal dari Spreadsheet...");
-            await otomatisSinkronisasiSoal();
+            alert("Sedang memperbarui soal dan pengaturan dari Spreadsheet...");
+            await Promise.all([otomatisSinkronisasiSoal(), sinkronisasiKonfigurasiPublik()]);
             renderDaftarPaketAdmin();
-            alert("Paket soal berhasil diperbarui!");
+            alert("Paket soal dan pengaturan berhasil diperbarui!");
         }
 
         function bukaAdmin() {
@@ -357,37 +381,81 @@
             if (modalPin) modalPin.classList.add('hidden');
         }
 
-        function verifikasiPin(e) {
+        async function verifikasiPin(e) {
             e.preventDefault();
             const inputPin = document.getElementById('input-pin-admin').value.trim();
-            const correctPin = localStorage.getItem('cbt_admin_pin') || '1234';
+            const btn = document.getElementById('btn-submit-pin');
+            if (!inputPin) return;
 
-            if (inputPin === correctPin) {
-                tutupPinModal();
-                const modalAdmin = document.getElementById('modal-admin');
-                if (modalAdmin) {
-                    modalAdmin.classList.remove('hidden');
-                    renderDaftarPaketAdmin();
-                    isiDropdownFilterRekap();
+            btn.disabled = true;
+            btn.textContent = "Memeriksa...";
+
+            try {
+                const res = await fetch(PERMANENT_SCRIPT_URL + "?action=verify_pin&pin=" + encodeURIComponent(inputPin));
+                const data = await res.json();
+
+                if (data && data.valid) {
+                    pinTerverifikasiSesi = inputPin;
+                    if (data.token_ujian) {
+                        tokenAktifCache = String(data.token_ujian).trim().toUpperCase();
+                        localStorage.setItem('cbt_token_cache', tokenAktifCache);
+                        document.getElementById('admin-token').value = tokenAktifCache;
+                    }
+                    tutupPinModal();
+                    const modalAdmin = document.getElementById('modal-admin');
+                    if (modalAdmin) {
+                        modalAdmin.classList.remove('hidden');
+                        renderDaftarPaketAdmin();
+                        isiDropdownFilterRekap();
+                    }
+                } else {
+                    alert("PIN Administrator salah!");
+                    document.getElementById('input-pin-admin').value = '';
                 }
-            } else {
-                alert("PIN Administrator salah!");
-                document.getElementById('input-pin-admin').value = '';
+            } catch (err) {
+                alert("Gagal memverifikasi PIN ke server: " + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = "Masuk";
             }
         }
 
-        function ubahPinAdmin() {
-            const pinLama = document.getElementById('admin-pin-lama').value.trim();
-            const pinBaru = document.getElementById('admin-pin-baru').value.trim();
-            const currentPin = localStorage.getItem('cbt_admin_pin') || '1234';
-
-            if (!pinLama || !pinBaru) {
-                alert("Harap isi PIN sebelumnya dan PIN baru!");
+        async function simpanTokenKeServer() {
+            const tokenBaru = document.getElementById('admin-token').value.trim().toUpperCase();
+            if (!tokenBaru) {
+                alert("Token ujian tidak boleh kosong!");
+                return;
+            }
+            if (!pinTerverifikasiSesi) {
+                alert("Sesi admin belum terverifikasi. Silakan buka ulang Menu Administrator.");
                 return;
             }
 
-            if (pinLama !== currentPin) {
-                alert("PIN sebelumnya salah!");
+            try {
+                await fetch(PERMANENT_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: "update_token",
+                        pin: pinTerverifikasiSesi,
+                        token: tokenBaru
+                    })
+                });
+                tokenAktifCache = tokenBaru;
+                localStorage.setItem('cbt_token_cache', tokenBaru);
+                alert("Token ujian berhasil disimpan ke Spreadsheet dan berlaku untuk semua perangkat!");
+            } catch (err) {
+                alert("Gagal menyimpan token: " + err.message);
+            }
+        }
+
+        async function ubahPinAdmin() {
+            const pinLama = document.getElementById('admin-pin-lama').value.trim();
+            const pinBaru = document.getElementById('admin-pin-baru').value.trim();
+
+            if (!pinLama || !pinBaru) {
+                alert("Harap isi PIN sebelumnya dan PIN baru!");
                 return;
             }
 
@@ -396,10 +464,24 @@
                 return;
             }
 
-            localStorage.setItem('cbt_admin_pin', pinBaru);
-            alert("PIN Administrator berhasil diubah!");
-            document.getElementById('admin-pin-lama').value = '';
-            document.getElementById('admin-pin-baru').value = '';
+            try {
+                await fetch(PERMANENT_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: "update_pin",
+                        pin_lama: pinLama,
+                        pin_baru: pinBaru
+                    })
+                });
+                pinTerverifikasiSesi = pinBaru;
+                alert("Permintaan pembaruan PIN telah dikirim ke Spreadsheet. Silakan uji login ulang dengan PIN baru.");
+                document.getElementById('admin-pin-lama').value = '';
+                document.getElementById('admin-pin-baru').value = '';
+            } catch (err) {
+                alert("Gagal memperbarui PIN: " + err.message);
+            }
         }
 
         function tutupAdmin() {
@@ -572,25 +654,49 @@
 
         function downloadSoalTanpaKunci() {
             let dummyPaket = {
-                title: sesiTes.paketTitle,
-                questions: JSON.parse(JSON.stringify(sesiTes.rawSoalAsli))
+                title: sesiUjian.paketTitle,
+                questions: JSON.parse(JSON.stringify(sesiUjian.rawSoalAsli))
             };
             generatePrintView(dummyPaket, false);
         }
 
-        // Memisahkan judul hanya jika teks diawali blok <b>...</b> yang berdiri sendiri sebagai judul
-        // (diikuti baris baru/enter), sementara bold/italic/underline di kalimat tetap pada posisinya.
+        // Menjadikan baris awal yang ber-bold (Ctrl+B) + Alt+Enter (1 atau 2 kali)
+        // sebagai judul (.soal-judul-format, rata tengah & bold), dan mempertahankan
+        // jarak antarparagraf hasil Alt+Enter 2 kali pada isi soal.
         function extractStandaloneHeaderTitle(text) {
-            let trimmed = String(text || "").trim();
-            let match = trimmed.match(/^<b>([\s\S]+?)<\/b>(?:\r?\n)+([\s\S]+)$/i);
-            if (match) {
-                return { headerTitle: match[1].trim(), bodyText: match[2].trim() };
+            const raw = String(text || "")
+                .replace(/<\s*br\s*\/?>/gi, "\n")
+                .replace(/\r\n/g, "\n")
+                .trim();
+
+            if (!raw) {
+                return { headerTitle: "", bodyText: "" };
             }
-            let singleTitleMatch = trimmed.match(/^<b>([\s\S]+?)<\/b>$/i);
-            if (singleTitleMatch) {
-                return { headerTitle: singleTitleMatch[1].trim(), bodyText: "" };
+
+            const lines = raw.split("\n");
+            const firstLineRaw = lines[0] || "";
+            const firstLine = firstLineRaw.trim();
+
+            // Harus ada teks isi setelah baris judul (baik setelah 1x maupun 2x Alt+Enter)
+            const restText = lines.slice(1).join("\n").replace(/^\n+/, "").trim();
+            if (!firstLine || !restText) {
+                return { headerTitle: "", bodyText: raw };
             }
-            return { headerTitle: "", bodyText: trimmed };
+
+            if (/<b>/i.test(firstLine)) {
+                const cleanTitle = firstLine
+                    .replace(/<\/?b>/gi, "")
+                    .trim();
+                const stripped = firstLine.replace(/<b>[\s\S]*?<\/b>/gi, "").trim();
+                if (cleanTitle && stripped === "") {
+                    return {
+                        headerTitle: cleanTitle,
+                        bodyText: restText
+                    };
+                }
+            }
+
+            return { headerTitle: "", bodyText: raw };
         }
 
         function parsePaketSoalForPrint(questions) {
@@ -659,8 +765,8 @@
                         }
                         .watermark-bg > * { position: relative; z-index: 1; }
                         .soal-item { break-inside: avoid; background: white; border: 1px solid #cbd5e1; border-radius: 1rem; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
-                        .soal-judul-format { text-align: center; font-weight: bold; margin-bottom: 12px; }
-                        .soal-teks-format { text-align: justify; white-space: pre-line; line-height: 1.7; }
+                        .soal-judul-format { text-align: center !important; font-weight: bold !important; margin-bottom: 16px; overflow-wrap: break-word; word-break: break-word; }
+                        .soal-teks-format { text-align: justify !important; white-space: pre-line; line-height: 1.7; overflow-wrap: break-word; word-break: break-word; }
                     </style>
                 </head>
                 <body class="bg-white">
@@ -780,16 +886,17 @@
             }
         }
 
-        function mulaiTes(e) {
+        async function mulaiUjian(e) {
             e.preventDefault();
             const nama = document.getElementById('input-nama').value;
             const nisn = document.getElementById('input-nisn').value;
             const paketId = document.getElementById('select-paket').value;
             const tokenInput = document.getElementById('input-token').value.trim().toUpperCase();
-            const savedToken = localStorage.getItem('cbt_token') || 'TKA2026';
 
-            if (tokenInput !== savedToken) {
-                alert("Token Tes salah! Silakan minta token yang benar kepada Administrator.");
+            await sinkronisasiKonfigurasiPublik();
+
+            if (tokenInput !== tokenAktifCache) {
+                alert("Token ujian salah! Silakan minta token yang benar kepada Administrator.");
                 return;
             }
 
@@ -803,7 +910,7 @@
             let parsedQuestions = parsePaketSoalForPrint(paketDipilih.questions);
             let durasiMenit = paketDurasi[paketId] || 60;
 
-            sesiTes = {
+            sesiUjian = {
                 nama: nama,
                 nisn: nisn,
                 paketId: paketId,
@@ -820,7 +927,7 @@
             document.getElementById('lbl-paket').textContent = paketDipilih.title;
 
             document.getElementById('view-login').classList.add('hidden');
-            document.getElementById('view-Tes').classList.remove('hidden');
+            document.getElementById('view-ujian').classList.remove('hidden');
 
             sisaDetik = durasiMenit * 60;
             mulaiTimer();
@@ -833,7 +940,7 @@
             timerInterval = setInterval(() => {
                 if (sisaDetik <= 0) {
                     clearInterval(timerInterval);
-                    alert("Waktu Tes telah habis!");
+                    alert("Waktu ujian telah habis!");
                     hitungDanKirimHasil(true);
                     return;
                 }
@@ -845,8 +952,8 @@
         }
 
         function renderSoal() {
-            const s = sesiTes.soal[sesiTes.currentIndex];
-            document.getElementById('lbl-nomor-soal').textContent = `Soal No. ${sesiTes.currentIndex + 1} dari ${sesiTes.soal.length}`;
+            const s = sesiUjian.soal[sesiUjian.currentIndex];
+            document.getElementById('lbl-nomor-soal').textContent = `Soal No. ${sesiUjian.currentIndex + 1} dari ${sesiUjian.soal.length}`;
             document.getElementById('lbl-bobot').textContent = `Skor Maks: 3`;
 
             let html = "";
@@ -860,7 +967,7 @@
             if (s.type === 'mc') {
                 html += '<p class="text-xs text-indigo-600 mb-3 font-semibold">* Pilih 1 jawaban yang benar</p><div class="space-y-3">';
                 const hurufOpsi = ['A', 'B', 'C', 'D', 'E'];
-                let currentAns = sesiTes.jawaban[sesiTes.currentIndex] || '';
+                let currentAns = sesiUjian.jawaban[sesiUjian.currentIndex] || '';
                 s.options.forEach((opt, idx) => {
                     let kodeOpsi = hurufOpsi[idx] || (idx + 1);
                     let checked = currentAns === kodeOpsi ? 'checked' : '';
@@ -878,7 +985,7 @@
             } else if (s.type === 'checkbox') {
                 html += '<p class="text-xs text-indigo-600 mb-3 font-semibold">* Pilih minimal 2 jawaban yang benar</p><div class="space-y-3">';
                 const hurufOpsi = ['A', 'B', 'C', 'D', 'E'];
-                let savedAns = sesiTes.jawaban[sesiTes.currentIndex] ? sesiTes.jawaban[sesiTes.currentIndex].split(',') : [];
+                let savedAns = sesiUjian.jawaban[sesiUjian.currentIndex] ? sesiUjian.jawaban[sesiUjian.currentIndex].split(',') : [];
                 s.options.forEach((opt, idx) => {
                     let kodeOpsi = hurufOpsi[idx] || (idx + 1);
                     let checked = savedAns.includes(kodeOpsi) ? 'checked' : '';
@@ -899,7 +1006,7 @@
                 cols.forEach(c => { html += `<th class="p-3 border text-center font-semibold">${c}</th>`; });
                 html += '</tr></thead><tbody>';
                 
-                let savedGrid = sesiTes.jawaban[sesiTes.currentIndex] ? sesiTes.jawaban[sesiTes.currentIndex].split(',') : [];
+                let savedGrid = sesiUjian.jawaban[sesiUjian.currentIndex] ? sesiUjian.jawaban[sesiUjian.currentIndex].split(',') : [];
                 let rows = s.rows.length > 0 ? s.rows : [];
                 rows.forEach((rowText, rIdx) => {
                     html += `<tr class="border-b hover:bg-slate-50"><td class="p-3 border text-slate-700 font-medium">${rowText}</td>`;
@@ -913,11 +1020,11 @@
             }
 
             document.getElementById('container-soal').innerHTML = html;
-            document.getElementById('btn-prev').style.display = sesiTes.currentIndex === 0 ? 'none' : 'block';
-            document.getElementById('btn-next').textContent = sesiTes.currentIndex === sesiTes.soal.length - 1 ? 'Selesai Tes' : 'Selanjutnya';
+            document.getElementById('btn-prev').style.display = sesiUjian.currentIndex === 0 ? 'none' : 'block';
+            document.getElementById('btn-next').textContent = sesiUjian.currentIndex === sesiUjian.soal.length - 1 ? 'Selesai Ujian' : 'Selanjutnya';
             
             const btnRagu = document.getElementById('btn-ragu');
-            if (sesiTes.ragu[sesiTes.currentIndex]) {
+            if (sesiUjian.ragu[sesiUjian.currentIndex]) {
                 btnRagu.className = "bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition";
                 btnRagu.textContent = "Batal Ragu";
             } else {
@@ -929,7 +1036,7 @@
         }
 
         function simpanJawaban(val) {
-            sesiTes.jawaban[sesiTes.currentIndex] = val;
+            sesiUjian.jawaban[sesiUjian.currentIndex] = val;
             renderPalette();
         }
 
@@ -937,16 +1044,16 @@
             let checkedBoxes = document.querySelectorAll('.cb-opsi:checked');
             if (checkedBoxes.length > 0) {
                 let vals = Array.from(checkedBoxes).map(cb => cb.value).join(',');
-                sesiTes.jawaban[sesiTes.currentIndex] = vals;
+                sesiUjian.jawaban[sesiUjian.currentIndex] = vals;
             } else {
-                delete sesiTes.jawaban[sesiTes.currentIndex];
+                delete sesiUjian.jawaban[sesiUjian.currentIndex];
             }
             renderPalette();
         }
 
         function simpanGrid() {
             let gridAns = [];
-            let s = sesiTes.soal[sesiTes.currentIndex];
+            let s = sesiUjian.soal[sesiUjian.currentIndex];
             let rows = s.rows.length > 0 ? s.rows : [];
             let adaTerisi = false;
             rows.forEach((_, rIdx) => {
@@ -959,16 +1066,16 @@
                 }
             });
             if (adaTerisi) {
-                sesiTes.jawaban[sesiTes.currentIndex] = gridAns.join(',');
+                sesiUjian.jawaban[sesiUjian.currentIndex] = gridAns.join(',');
             } else {
-                delete sesiTes.jawaban[sesiTes.currentIndex];
+                delete sesiUjian.jawaban[sesiUjian.currentIndex];
             }
             renderPalette();
         }
 
         function tandaiRagu() {
-            let idx = sesiTes.currentIndex;
-            sesiTes.ragu[idx] = !sesiTes.ragu[idx];
+            let idx = sesiUjian.currentIndex;
+            sesiUjian.ragu[idx] = !sesiUjian.ragu[idx];
             renderSoal();
         }
 
@@ -976,21 +1083,21 @@
             const container = document.getElementById('palette-grid');
             if (!container) return;
             container.innerHTML = '';
-            sesiTes.soal.forEach((s, idx) => {
+            sesiUjian.soal.forEach((s, idx) => {
                 let btn = document.createElement('button');
                 btn.type = 'button';
-                let isRagu = sesiTes.ragu[idx];
+                let isRagu = sesiUjian.ragu[idx];
                 let hasAnswer = cekSudahDijawab(idx);
 
                 let bgClass = "bg-slate-200 text-slate-700 hover:bg-slate-300";
                 if (hasAnswer) bgClass = "bg-blue-600 text-white hover:bg-blue-700";
                 if (isRagu) bgClass = "bg-amber-400 text-slate-900 hover:bg-amber-500";
-                if (idx === sesiTes.currentIndex) bgClass += " ring-2 ring-offset-2 ring-indigo-600 font-bold";
+                if (idx === sesiUjian.currentIndex) bgClass += " ring-2 ring-offset-2 ring-indigo-600 font-bold";
 
                 btn.className = `p-2 rounded-lg text-xs font-semibold transition ${bgClass}`;
                 btn.textContent = idx + 1;
                 btn.onclick = () => {
-                    sesiTes.currentIndex = idx;
+                    sesiUjian.currentIndex = idx;
                     renderSoal();
                 };
                 container.appendChild(btn);
@@ -998,8 +1105,8 @@
         }
 
         function cekSudahDijawab(idx) {
-            let s = sesiTes.soal[idx];
-            let ans = sesiTes.jawaban[idx];
+            let s = sesiUjian.soal[idx];
+            let ans = sesiUjian.jawaban[idx];
             if (ans === undefined || ans === null || ans === "") return false;
             if (s.type === 'mc') return String(ans).trim().length > 0;
             if (s.type === 'checkbox') return String(ans).split(',').filter(x => x.trim()).length >= 2;
@@ -1013,8 +1120,8 @@
         }
 
         function soalBerikutnya() {
-            if (sesiTes.currentIndex < sesiTes.soal.length - 1) {
-                sesiTes.currentIndex++;
+            if (sesiUjian.currentIndex < sesiUjian.soal.length - 1) {
+                sesiUjian.currentIndex++;
                 renderSoal();
             } else {
                 konfirmasiSelesai();
@@ -1022,15 +1129,15 @@
         }
 
         function soalSebelumnya() {
-            if (sesiTes.currentIndex > 0) {
-                sesiTes.currentIndex--;
+            if (sesiUjian.currentIndex > 0) {
+                sesiUjian.currentIndex--;
                 renderSoal();
             }
         }
 
         function konfirmasiSelesai() {
             let unansweredIdx = -1;
-            for (let i = 0; i < sesiTes.soal.length; i++) {
+            for (let i = 0; i < sesiUjian.soal.length; i++) {
                 if (!cekSudahDijawab(i)) {
                     unansweredIdx = i;
                     break;
@@ -1039,23 +1146,23 @@
 
             if (unansweredIdx !== -1) {
                 alert(`Masih ada soal yang belum dijawab atau belum memenuhi syarat ketentuan (Cek Soal No. ${unansweredIdx + 1}). Anda akan diarahkan ke soal tersebut.`);
-                sesiTes.currentIndex = unansweredIdx;
+                sesiUjian.currentIndex = unansweredIdx;
                 renderSoal();
                 return;
             }
 
-            if (confirm("Apakah Anda yakin ingin menyelesaikan Tes dan mengirimkan jawaban?")) {
+            if (confirm("Apakah Anda yakin ingin menyelesaikan ujian dan mengirimkan jawaban?")) {
                 clearInterval(timerInterval);
                 hitungDanKirimHasil(false);
             }
         }
 
         function hitungDanKirimHasil(isWaktuHabis) {
-            let totalSkorMaks = sesiTes.soal.length * 3;
+            let totalSkorMaks = sesiUjian.soal.length * 3;
             let perolehanSkorTotal = 0;
 
-            sesiTes.soal.forEach((s, idx) => {
-                let userAns = sesiTes.jawaban[idx] || "";
+            sesiUjian.soal.forEach((s, idx) => {
+                let userAns = sesiUjian.jawaban[idx] || "";
                 let skorSoal = 0;
 
                 if (s.type === 'mc') {
@@ -1093,20 +1200,20 @@
             let persentase = totalSkorMaks > 0 ? (perolehanSkorTotal / totalSkorMaks) * 100 : 0;
             let nilaiAkhirSkala100 = Math.round(persentase);
 
-            sesiTes.skor = nilaiAkhirSkala100;
-            sesiTes.persentase = persentase;
-            sesiTes.perolehanSkorTotal = perolehanSkorTotal;
-            sesiTes.totalSkorMaks = totalSkorMaks;
+            sesiUjian.skor = nilaiAkhirSkala100;
+            sesiUjian.persentase = persentase;
+            sesiUjian.perolehanSkorTotal = perolehanSkorTotal;
+            sesiUjian.totalSkorMaks = totalSkorMaks;
 
             renderEvaluasiHasil();
 
-            document.getElementById('view-Tes').classList.add('hidden');
+            document.getElementById('view-ujian').classList.add('hidden');
             document.getElementById('view-hasil').classList.remove('hidden');
 
             kirimRekapKeServer({
-                nama: sesiTes.nama,
-                nisn: sesiTes.nisn,
-                paket: sesiTes.paketTitle,
+                nama: sesiUjian.nama,
+                nisn: sesiUjian.nisn,
+                paket: sesiUjian.paketTitle,
                 skor: nilaiAkhirSkala100,
                 benar: perolehanSkorTotal,
                 salah: totalSkorMaks - perolehanSkorTotal,
@@ -1116,27 +1223,27 @@
 
         function renderEvaluasiHasil() {
             const evalPesanDiv = document.getElementById('eval-pesan-skor');
-            let p = sesiTes.persentase;
+            let p = sesiUjian.persentase;
             
             if (p < 74) {
                 evalPesanDiv.className = "p-3 rounded-xl font-bold text-sm bg-rose-100 text-rose-700";
-                evalPesanDiv.textContent = `Skor Total Tes: ${sesiTes.perolehanSkorTotal} dari ${sesiTes.totalSkorMaks} (${Math.round(p)}%) — Nilai anda KURANG, jangan patah semangat dan lebih giat belajar`;
+                evalPesanDiv.textContent = `Skor Total Tes: ${sesiUjian.perolehanSkorTotal} dari ${sesiUjian.totalSkorMaks} (${Math.round(p)}%) — Nilai anda KURANG, jangan patah semangat dan lebih giat belajar`;
             } else if (p >= 75 && p <= 83) {
                 evalPesanDiv.className = "p-3 rounded-xl font-bold text-sm bg-amber-100 text-amber-800";
-                evalPesanDiv.textContent = `Skor Total Tes: ${sesiTes.perolehanSkorTotal} dari ${sesiTes.totalSkorMaks} (${Math.round(p)}%) — Nilai anda CUKUP, tetap semangat giat belajar`;
+                evalPesanDiv.textContent = `Skor Total Tes: ${sesiUjian.perolehanSkorTotal} dari ${sesiUjian.totalSkorMaks} (${Math.round(p)}%) — Nilai anda CUKUP, tetap semangat giat belajar`;
             } else if (p >= 84 && p <= 92) {
                 evalPesanDiv.className = "p-3 rounded-xl font-bold text-sm bg-emerald-100 text-emerald-700";
-                evalPesanDiv.textContent = `Skor Total Tes: ${sesiTes.perolehanSkorTotal} dari ${sesiTes.totalSkorMaks} (${Math.round(p)}%) — Nilai anda BAIK, tetap semangat giat belajar`;
+                evalPesanDiv.textContent = `Skor Total Tes: ${sesiUjian.perolehanSkorTotal} dari ${sesiUjian.totalSkorMaks} (${Math.round(p)}%) — Nilai anda BAIK, tetap semangat giat belajar`;
             } else {
                 evalPesanDiv.className = "p-3 rounded-xl font-bold text-sm bg-blue-100 text-blue-700";
-                evalPesanDiv.textContent = `Skor Total Tes: ${sesiTes.perolehanSkorTotal} dari ${sesiTes.totalSkorMaks} (${Math.round(p)}%) — Nilai anda SANGAT BAIK, tetap semangat giat belajar`;
+                evalPesanDiv.textContent = `Skor Total Tes: ${sesiUjian.perolehanSkorTotal} dari ${sesiUjian.totalSkorMaks} (${Math.round(p)}%) — Nilai anda SANGAT BAIK, tetap semangat giat belajar`;
             }
 
             const containerList = document.getElementById('eval-container-list');
             containerList.innerHTML = '';
             const hurufOpsi = ['A', 'B', 'C', 'D', 'E'];
 
-            sesiTes.soal.forEach((s, idx) => {
+            sesiUjian.soal.forEach((s, idx) => {
                 let card = document.createElement('div');
                 card.className = "bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-3 watermark-bg";
                 
@@ -1155,7 +1262,7 @@
                 }
 
                 let bodyHtml = '';
-                let userAns = sesiTes.jawaban[idx] || "";
+                let userAns = sesiUjian.jawaban[idx] || "";
 
                 if (s.type === 'mc') {
                     bodyHtml += '<div class="space-y-3">';
